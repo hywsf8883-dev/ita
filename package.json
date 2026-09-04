@@ -1,0 +1,7 @@
+{
+  "name": "catps-host-bot",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": { "start": "node bot.js" },
+  "dependencies": { "discord.js": "^14.22.1", "dotenv": "^16.6.1" }
+}
