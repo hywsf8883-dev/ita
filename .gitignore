@@ -1,0 +1,5 @@
+node_modules/
+.env
+data.json
+bot.log
+*.log
