@@ -1,7 +1,7 @@
 require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
-const { Client, GatewayIntentBits, MessageFlags, ContainerBuilder, TextDisplayBuilder, ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, LabelBuilder, TextInputBuilder, TextInputStyle, ChannelType, PermissionFlagsBits } = require('discord.js');
+const { Client, GatewayIntentBits, MessageFlags, ContainerBuilder, TextDisplayBuilder, SeparatorBuilder, SeparatorSpacingSize, ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, LabelBuilder, TextInputBuilder, TextInputStyle, ChannelType, PermissionFlagsBits } = require('discord.js');
 
 const ADMIN = process.env.ADMIN_ID || '340219033486098433';
 const PTERO = (process.env.PTERO_URL || '').replace(/\/$/, '');
@@ -13,7 +13,7 @@ const DB_FILE = path.join(__dirname, 'data.json');
 if (!fs.existsSync(DB_FILE)) fs.writeFileSync(DB_FILE, JSON.stringify({ accounts: [], hosts: [] }, null, 2));
 const read = () => JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
 const write = (db) => fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2));
-const ui = (message, extra = []) => { const container = new ContainerBuilder().addTextDisplayComponents(new TextDisplayBuilder().setContent(message)); for (const row of extra) container.addActionRowComponents(row); return { flags: MessageFlags.IsComponentsV2, components: [container] }; };
+const ui = (message, extra = []) => { const container = new ContainerBuilder().addTextDisplayComponents(new TextDisplayBuilder().setContent(message)); for (const row of extra) container.addSeparatorComponents(new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)).addActionRowComponents(row); return { flags: MessageFlags.IsComponentsV2, components: [container] }; };
 const option = (label, value, description = '') => ({ label: label.slice(0, 100), value, description: description.slice(0, 100) });
 const menu = (id, placeholder, options) => new ActionRowBuilder().addComponents(new StringSelectMenuBuilder().setCustomId(id).setPlaceholder(placeholder).addOptions(options));
 const size = (v) => { const m = /^([\d.]+)\s*(mg|mb|g|gb)$/i.exec(v || ''); if (!m) return 0; return Math.round(Number(m[1]) * (/^g/i.test(m[2]) ? 1024 : 1)); };
